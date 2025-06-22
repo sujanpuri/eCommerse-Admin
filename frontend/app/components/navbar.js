@@ -42,7 +42,7 @@ export default function Navbar() {
       {/* NAVBAR */}
       <nav className="bg-white text-gray-800 w-full shadow-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="text-xl font-bold">🛒 Shop</div>
+          <div className="text-xl font-bold">🛒 eCommerse (Admin)</div>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex gap-6 items-center">
@@ -95,7 +95,7 @@ export default function Navbar() {
       {/* RIGHT-SIDED MENU (Mobile Only) */}
       <div
         id="mobileMenu"
-        className={`fixed top-0 right-0 h-full w-64 bg-white shadow-xl z-40 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-full w-64 bg-white text-gray-800 shadow-xl z-40 transform transition-transform duration-300 ease-in-out ${
           menuOpen ? "translate-x-0" : "translate-x-full"
         } md:hidden`}
       >
