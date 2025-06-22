@@ -1,6 +1,7 @@
 "use client";
 
 import { signIn, signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 
 export default function HomePage() {
   const { data: session, status } = useSession();
@@ -24,6 +25,14 @@ export default function HomePage() {
       ) : (
         <>
           <p>You are not logged in.</p>
+
+          <Link
+            href="/routes/login"
+            style={{ marginBottom: "1rem", display: "block" }}
+          >
+            Go to Login Page
+          </Link>
+
           <button onClick={() => signIn("google")}>Sign in with Gmail</button>
         </>
       )}
