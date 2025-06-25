@@ -17,7 +17,6 @@ connectDB();
 app.get('/', (req, res) => {
   res.send('Welcome to the E-commerce (Admin) Backend');
 });
-
 // Routes
 app.use('/api/users', userRoutes);
 

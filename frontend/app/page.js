@@ -2,9 +2,29 @@
 
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import axios from "axios";
+import { useEffect } from "react";
 
 export default function HomePage() {
   const { data: session, status } = useSession();
+
+  useEffect(() => {
+    const saveUser = async () => {
+      if (session?.user?.email) {
+        try {
+          await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/save`, {
+            name: session.user.name,
+            email: session.user.email,
+            photo: session.user.image,
+          });
+        } catch (err) {
+          console.error("❌ Error saving user", err);
+        }
+      }
+    };
+
+    saveUser();
+  }, [session]);
 
   if (status === "loading") {
     return <p>Loading...</p>;

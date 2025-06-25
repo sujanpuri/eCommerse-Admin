@@ -11,6 +11,7 @@ const navLinks = [
   { name: "About", href: "/about" },
   { name: "Items", href: "/items" },
   { name: "Analysis", href: "/analysis" },
+  { name: "Users", href: "/routes/users" },
 ];
 
 export default function Navbar() {
@@ -85,7 +86,11 @@ export default function Navbar() {
             >
               Profile
             </Link>
-            <button id="menuButton" onClick={() => setMenuOpen(!menuOpen)} className="text-2xl">
+            <button
+              id="menuButton"
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="text-2xl"
+            >
               {menuOpen ? <FiX /> : <FiMenu />}
             </button>
           </div>

@@ -9,6 +9,19 @@ const handler = NextAuth({
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
+  
+  callbacks: {
+    async session({ session, token }) {
+      session.user.email = token.email;
+      return session;
+    },
+    async jwt({ token, account, profile }) {
+      if (account) {
+        token.email = profile.email;
+      }
+      return token;
+    },
+  },
 });
 
 export const GET = handler;
