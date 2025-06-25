@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllUsers, saveUser, updateUserRole } from '../controller/userController.js';
+import { getAllUsers, saveUser, updateLoggedInUser, updateUserRole } from '../controller/userController.js';
 import { verifyAdmin } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
@@ -11,5 +11,7 @@ router.get('/', getAllUsers);
 
 // Admin-only: promote or demote users
 router.put('/update-role', verifyAdmin, updateUserRole);
+
+router.put('/edit', updateLoggedInUser);
 
 export default router;

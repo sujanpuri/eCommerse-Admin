@@ -57,3 +57,23 @@ export const updateUserRole = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
+
+// controllers/userController.js
+export const updateLoggedInUser = async (req, res) => {
+  try {
+    const { email, name, photo } = req.body;
+
+    const updatedUser = await User.findOneAndUpdate(
+      { email },
+      { name, photo },
+      { new: true }
+    );
+
+    if (!updatedUser) return res.status(404).json({ error: "User not found" });
+
+    res.status(200).json({ message: "Profile updated", user: updatedUser });
+  } catch (err) {
+    console.error("Error updating profile:", err.message);
+    res.status(500).json({ error: "Server error" });
+  }
+};
