@@ -1,4 +1,3 @@
-// context/UserContext.js
 'use client';
 import { createContext, useEffect, useState, useContext } from 'react';
 import { useSession } from 'next-auth/react';
@@ -8,26 +7,32 @@ const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const { data: session } = useSession();
-  const [role, setRole] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const fetchRole = async () => {
+    const fetchUser = async () => {
       if (session?.user?.email) {
-        const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/save`, {
-          name: session.user.name,
-          email: session.user.email,
-          photo: session.user.image,
-        });
-
-        setRole(res.data.user.role); // role from backend
+        try {
+          const res = await axios.post(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/save`,
+            {
+              name: session.user.name,
+              email: session.user.email,
+              photo: session.user.image,
+            }
+          );
+          setUser(res.data.user); // Save full user
+        } catch (err) {
+          console.error("Error fetching user:", err);
+        }
       }
     };
 
-    fetchRole();
+    fetchUser();
   }, [session]);
 
   return (
-    <UserContext.Provider value={{ role }}>
+    <UserContext.Provider value={{ user }}>
       {children}
     </UserContext.Provider>
   );

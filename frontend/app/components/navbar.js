@@ -60,9 +60,9 @@ export default function Navbar() {
             ))}
 
             <Link
-              href="/profile"
+              href="/routes/profile"
               className={`hover:text-blue-600 ${
-                pathname === "/profile" ? "text-blue-600 font-semibold" : ""
+                pathname === "/routes/profile" ? "text-blue-600 font-semibold" : ""
               }`}
             >
               Profile
@@ -79,9 +79,9 @@ export default function Navbar() {
           {/* Mobile View */}
           <div className="md:hidden flex items-center gap-4">
             <Link
-              href="/profile"
+              href="/routes/profile"
               className={`hover:text-blue-600 ${
-                pathname === "/profile" ? "text-blue-600 font-semibold" : ""
+                pathname === "/routes/profile" ? "text-blue-600 font-semibold" : ""
               }`}
             >
               Profile
