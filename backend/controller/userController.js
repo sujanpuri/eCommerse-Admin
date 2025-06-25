@@ -35,3 +35,25 @@ export const getAllUsers = async (req, res)=> {
     res.status(500).json({ error: 'Failed to fetch users' });
   }
 }
+
+export const updateUserRole = async (req, res) => {
+  try {
+    const { userId, newRole } = req.body;
+
+    const allowedRoles = ["admin", "staff", "user"];
+    if (!allowedRoles.includes(newRole)) {
+      return res.status(400).json({ error: "Invalid role" });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { role: newRole },
+      { new: true }
+    );
+
+    res.status(200).json({ message: "Role updated", user: updatedUser });
+  } catch (err) {
+    console.error("Error updating user role:", err.message);
+    res.status(500).json({ error: "Server error" });
+  }
+};
