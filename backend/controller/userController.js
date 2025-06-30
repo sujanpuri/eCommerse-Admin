@@ -1,5 +1,4 @@
 import User from '../models/User.js';
-import Item from '../models/Item.js';
 
 
 // User Intractions
@@ -74,35 +73,3 @@ export const updateLoggedInUser = async (req, res) => {
   }
 };
 
-
-// Item Intractions
-
-export const createItem = async (req, res) => {
-  try {
-    const { name, price, image, description } = req.body;
-
-    if (!name) return res.status(400).json({ message: 'Name is required' });
-
-    const newItem = new Item({
-      name,
-      price,
-      image,
-      description,
-      createdBy: req.user._id,
-    });
-
-    await newItem.save();
-    res.status(201).json({ message: 'Item created successfully', item: newItem });
-  } catch (err) {
-    res.status(500).json({ message: 'Failed to create item', error: err.message });
-  }
-};
-
-export const getItems = async (req, res) => {
-  try {
-    const items = await Item.find().populate('createdBy', 'name email');
-    res.status(200).json(items);
-  } catch (err) {
-    res.status(500).json({ message: 'Error fetching items', error: err.message });
-  }
-};
