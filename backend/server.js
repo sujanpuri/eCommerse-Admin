@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import userRoutes from './routes/userRoutes.js';
+import itemRoutes from './routes/itemRoutes.js';
 import connectDB from './config/connect.js';
 
 dotenv.config();
@@ -17,8 +18,10 @@ connectDB();
 app.get('/', (req, res) => {
   res.send('Welcome to the E-commerce (Admin) Backend');
 });
+
 // Routes
 app.use('/api/users', userRoutes);
+app.use('/api/items', itemRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

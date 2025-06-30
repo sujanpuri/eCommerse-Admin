@@ -1,21 +1,18 @@
 import User from '../models/User.js';
+import Item from '../models/Item.js';
 
-// console.log('User controller loaded');
-// Save user after Google login
+
+// User Intractions
 export const saveUser = async (req, res) => {
-  // console.log('Received request to save user:', req.body);
   try {
     const { name, email, photo } = req.body;
-    // console.log('Saving user:', { name, email, photo });
     if (!email) return res.status(400).json({ error: 'Email required' });
 
     let user = await User.findOne({ email });
-    // console.log('Creating new user:', user);
 
     if (!user) {
       user = new User({ name, email, photo }); // default role = 'user'
       await user.save();
-      // console.log('New user created:', user);
     }
 
     res.status(200).json({ message: 'User saved', user });
@@ -28,7 +25,7 @@ export const saveUser = async (req, res) => {
 export const getAllUsers = async (req, res)=> {
   try {
     const users = await User.find() // Fetch all users from the database
-    console.log('Fetched users:', users);
+    // console.log('Fetched users:', users);
     res.status(200).json(users); // Return the users as JSON response
   } catch (error) {
     console.error('Error fetching users:', error);
@@ -58,7 +55,6 @@ export const updateUserRole = async (req, res) => {
   }
 };
 
-// controllers/userController.js
 export const updateLoggedInUser = async (req, res) => {
   try {
     const { email, name, photo } = req.body;
@@ -75,5 +71,38 @@ export const updateLoggedInUser = async (req, res) => {
   } catch (err) {
     console.error("Error updating profile:", err.message);
     res.status(500).json({ error: "Server error" });
+  }
+};
+
+
+// Item Intractions
+
+export const createItem = async (req, res) => {
+  try {
+    const { name, price, image, description } = req.body;
+
+    if (!name) return res.status(400).json({ message: 'Name is required' });
+
+    const newItem = new Item({
+      name,
+      price,
+      image,
+      description,
+      createdBy: req.user._id,
+    });
+
+    await newItem.save();
+    res.status(201).json({ message: 'Item created successfully', item: newItem });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to create item', error: err.message });
+  }
+};
+
+export const getItems = async (req, res) => {
+  try {
+    const items = await Item.find().populate('createdBy', 'name email');
+    res.status(200).json(items);
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching items', error: err.message });
   }
 };
