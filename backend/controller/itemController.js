@@ -5,40 +5,87 @@ import cloudinary from '../utils/cloudinary.js';
 
 export const createItem = async (req, res) => {
   try {
-    const { name, price, image, description } = req.body;
-
-    if (!name) return res.status(400).json({ message: 'Name is required' });
-
-    const newItem = new Item({
+    const {
       name,
+      description,
       price,
       image,
+      category,
+      quantity,
+    } = req.body;
+
+    const soldout = quantity <= 0;
+
+    const newItem = await Item.create({
+      name,
       description,
-      createdBy: req.user._id,
+      price,
+      image,
+      category,
+      quantity,
+      soldout,
+      restockHistory: [{ quantity }],
     });
 
-    await newItem.save();
-    res.status(201).json({ message: 'Item created successfully', item: newItem });
+    res.status(201).json({ message: 'Item created', item: newItem });
   } catch (err) {
-    console.error('Error creating item:', err);
-    res.status(500).json({ message: 'Failed to create item', error: err.message });
+    console.error('Create Item Error:', err);
+    res.status(500).json({ error: 'Failed to create item' });
+  }
+};
+
+export const restockItem = async (req, res) => {
+  try {
+    const { quantity } = req.body;
+
+    const item = await Item.findById(req.params.id);
+    if (!item) return res.status(404).json({ error: 'Item not found' });
+
+    item.quantity += quantity;
+    item.soldout = item.quantity === 0;
+    item.restockHistory.push({ quantity });
+
+    await item.save();
+
+    res.json({ message: 'Restocked successfully', item });
+  } catch (err) {
+    res.status(500).json({ error: 'Restock failed' });
+  }
+};
+
+export const recordSale = async (req, res) => {
+  try {
+    const { quantity } = req.body;
+
+    const item = await Item.findById(req.params.id);
+    if (!item) return res.status(404).json({ error: 'Item not found' });
+
+    if (item.quantity < quantity)
+      return res.status(400).json({ error: 'Not enough stock' });
+
+    item.quantity -= quantity;
+    item.soldCount += quantity;
+    item.soldout = item.quantity === 0;
+    item.salesHistory.push({ quantity });
+
+    await item.save();
+
+    res.json({ message: 'Sale recorded', item });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to record sale' });
   }
 };
 
 export const getItems = async (req, res) => {
   try {
-    const items = await Item.find().populate('createdBy', 'name email');
+    const items = await Item.find(); // most recent first
     res.status(200).json(items);
+    console.log('Items fetched successfully');
   } catch (err) {
     res.status(500).json({ message: 'Error fetching items', error: err.message });
+    console.error('Error fetching items:', err);
   }
 };
-
-console.log('Cloudinary Config:', {
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-})
 
 // Cloudinary upload function
 export const uploadItemImage = async (req, res) => {
