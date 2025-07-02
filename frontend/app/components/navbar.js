@@ -7,7 +7,7 @@ import { signOut } from "next-auth/react";
 import { FiMenu, FiX } from "react-icons/fi";
 
 const navLinks = [
-  { name: "Home", href: "/" },
+  { name: "Home", href: "/routes/dashboard" },
   { name: "About", href: "/routes/about" },
   { name: "Items", href: "/routes/items" },
   { name: "Analysis", href: "/routes/analysis" },
@@ -43,7 +43,7 @@ export default function Navbar() {
       {/* NAVBAR */}
       <nav className="bg-white text-gray-800 w-full shadow-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="text-xl font-bold">🛒 eCommerse (Admin)</div>
+          <div className="text-xl font-bold">🛒 eCommerce (Admin)</div>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex gap-6 items-center">
