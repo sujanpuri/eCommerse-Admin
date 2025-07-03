@@ -23,7 +23,7 @@ An AI-supported admin panel built with **Next.js**, **Express.js**, and **MongoD
 * View all items in a table format
 
 📸 **Preview:**
-![Items Page](photos/Screenshot 2025-07-03 200534.png)
+![Items Page](./photos/Screenshot 2025-07-03 200534.png)
 
 ---
 
