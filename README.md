@@ -23,7 +23,7 @@ An AI-supported admin panel built with **Next.js**, **Express.js**, and **MongoD
 * View all items in a table format
 
 📸 **Preview:**
-![Items Page](./photos/Screenshot 2025-07-03 200534.png)
+![Items Page](photos/items)
 
 ---
 
@@ -37,7 +37,7 @@ An AI-supported admin panel built with **Next.js**, **Express.js**, and **MongoD
 * Ready for future chart integrations (bar, pie)
 
 📸 **Preview:**
-![Analysis Page](photos/Screenshot 2025-07-03 200638.png)
+![Analysis Page](photos/analysis)
 
 ---
 
@@ -48,7 +48,7 @@ An AI-supported admin panel built with **Next.js**, **Express.js**, and **MongoD
 * Prevent unauthorized access to protected routes
 
 📸 **Preview:**
-![User Management](photos/Screenshot 2025-07-03 200702.png)
+![User Management](photos/users)
 
 ---
 
@@ -59,7 +59,7 @@ An AI-supported admin panel built with **Next.js**, **Express.js**, and **MongoD
 * Protected route
 
 📸 **Preview:**
-![User Profile](photos/Screenshot 2025-07-03 200722.png)
+![User Profile](photos/profile)
 
 ---
 
