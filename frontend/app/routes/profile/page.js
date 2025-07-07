@@ -4,6 +4,7 @@ import { useUser } from "@/context/userContext";
 import { useState } from "react";
 import axios from "axios";
 import Navbar from "@/app/components/navbar";
+import Image from "next/image";
 
 export default function ProfilePage() {
   const { user, loading } = useUser();
@@ -47,14 +48,15 @@ export default function ProfilePage() {
         <div className="bg-white p-6 rounded-2xl shadow-md max-w-md w-full">
           <h1 className="text-2xl font-bold mb-4 text-center">Your Profile</h1>
           <div className="flex flex-col items-center">
-            <img
+            <Image 
               src={
                 editMode ? formData.photo : user.photo || "/default-avatar.png"
               }
               alt="Profile"
+              width={96}  
+              height={96}
               className="w-24 h-24 rounded-full border border-gray-300 mb-4"
-              onError={(e) => (e.target.src = "/default-avatar.png")}
-            />
+              />
 
             {editMode ? (
               <>

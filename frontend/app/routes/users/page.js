@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useUser } from "@/context/userContext";
 import axios from "axios";
 import Navbar from "@/app/components/navbar";
+import Image from "next/image";
 
 export default function UserListPage() {
   const [users, setUsers] = useState([]);
@@ -19,6 +20,7 @@ export default function UserListPage() {
     };
     fetchUsers();
   }, []);
+
   const handleRoleChange = async (userId, newRole) => {
     const userToChange = users.find((u) => u._id === userId);
     const confirmChange = window.confirm(
@@ -61,11 +63,7 @@ export default function UserListPage() {
               key={user._id}
               className="bg-white p-4 rounded-2xl shadow-md flex items-center space-x-4"
             >
-              <img
-                src={user.photo}
-                alt={user.name}
-                className="w-16 h-16 rounded-full border border-gray-300"
-              />
+              <Image src={user.photo} alt={user.name} width={50} height={50} className="rounded-full" />
               <div>
                 <h2 className="text-xl font-semibold">{user.name}</h2>
                 <p className="text-gray-600 text-sm">{user.email}</p>

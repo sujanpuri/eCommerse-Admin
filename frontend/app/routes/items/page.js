@@ -31,7 +31,7 @@ export default function ItemPage() {
     category: "",
     quantity: "",
   });
-  
+
   // Access Control
   useEffect(() => {
     if (loading) return;
@@ -330,9 +330,15 @@ export default function ItemPage() {
               onChange={(e) => setFilterStatus(e.target.value)}
               className="p-2 border rounded"
             >
-              <option value="" className="text-black">All Status</option>
-              <option value="available" className="text-black">Available</option>
-              <option value="soldout" className="text-black">Sold Out</option>
+              <option value="" className="text-black">
+                All Status
+              </option>
+              <option value="available" className="text-black">
+                Available
+              </option>
+              <option value="soldout" className="text-black">
+                Sold Out
+              </option>
             </select>
           </div>
 
@@ -398,7 +404,7 @@ export default function ItemPage() {
                   <tr key={item._id}>
                     <td className="p-2 border">{item.name}</td>
                     <td className="p-2 border">
-                      <img
+                      <Image
                         src={item.image}
                         width={50}
                         height={50}

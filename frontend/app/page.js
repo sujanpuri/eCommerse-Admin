@@ -4,6 +4,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import axios from "axios";
 import { useEffect } from "react";
+import Image from "next/image";
 
 export default function HomePage() {
   const { data: session, status } = useSession();
@@ -40,10 +41,11 @@ export default function HomePage() {
       {session ? (
         <>
           <p>Welcome, {session.user.name}!</p>
-          <img src={session.user.image} alt="profile" width={50} />
+          <Image src={session.user.image} alt="profile" width={50} height={50} className="rounded-full" />
+          <br />
           <p>Email: {session.user.email}</p>
           <br />
-          <button onClick={() => signOut()}>Sign out</button>
+          <button onClick={() => signOut()} className="text-red-500">Sign out</button>
 
           <br />
           <Link
