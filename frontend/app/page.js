@@ -12,11 +12,14 @@ export default function HomePage() {
     const saveUser = async () => {
       if (session?.user?.email) {
         try {
-          await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/save`, {
-            name: session.user.name,
-            email: session.user.email,
-            photo: session.user.image,
-          });
+          await axios.post(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/save`,
+            {
+              name: session.user.name,
+              email: session.user.email,
+              photo: session.user.image,
+            }
+          );
         } catch (err) {
           console.error("❌ Error saving user", err);
         }
@@ -41,6 +44,14 @@ export default function HomePage() {
           <p>Email: {session.user.email}</p>
           <br />
           <button onClick={() => signOut()}>Sign out</button>
+
+          <br />
+          <Link
+            href="/routes/dashboard"
+            className="inline-block mt-4 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition duration-300 ease-in-out text-center"
+          >
+            Go to Dashboard Page
+          </Link>
         </>
       ) : (
         <>

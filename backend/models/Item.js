@@ -10,11 +10,11 @@ const salesSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now },
 });
 
-const reviewSchema = new mongoose.Schema({
-  user: String, // demo user name
-  text: String,
-  rating: { type: Number, min: 1, max: 5 },
-});
+// const reviewSchema = new mongoose.Schema({
+//   user: String, // demo user name
+//   text: String,
+//   rating: { type: Number, min: 1, max: 5 },
+// });
 
 const itemSchema = new mongoose.Schema(
   {
