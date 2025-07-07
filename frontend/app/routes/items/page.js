@@ -2,10 +2,10 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
-import { useUser } from "@/context/userContext";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Image from "next/image";
+import { useUser } from "@/context/userContext";
 import Navbar from "@/app/components/navbar";
 
 export default function ItemPage() {
@@ -36,7 +36,7 @@ export default function ItemPage() {
   useEffect(() => {
     if (loading) return;
     if (!user || (user.role !== "admin" && user.role !== "staff")) {
-      alert("Access denied: You do not have permission to create items.");
+      alert("Access denied: You do not have permission to create items!!");
       router.push("/routes/dashboard");
     } else {
       fetchItems();
@@ -118,15 +118,13 @@ export default function ItemPage() {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (!user) return <p>Access Denied</p>;
-
+  
   // Unique categories for filter dropdown
   const categories = useMemo(() => {
     const cats = new Set(items.map((item) => item.category));
     return Array.from(cats);
   }, [items]);
-
+  
   // Handle sorting by column
   const requestSort = (key) => {
     let direction = "asc";
@@ -135,56 +133,56 @@ export default function ItemPage() {
     }
     setSortConfig({ key, direction });
   };
-
+  
   // Apply search, filter, sort
   const filteredItems = useMemo(() => {
     let filtered = items;
-
+    
     // Filter by search term in name (case insensitive)
     if (searchTerm) {
       filtered = filtered.filter((item) =>
         item.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
-    // Filter by category
-    if (filterCategory) {
-      filtered = filtered.filter((item) => item.category === filterCategory);
-    }
-
-    // Filter by status
-    if (filterStatus) {
-      if (filterStatus === "available")
-        filtered = filtered.filter((item) => !item.soldout);
-      else if (filterStatus === "soldout")
+    );
+  }
+  
+  // Filter by category
+  if (filterCategory) {
+    filtered = filtered.filter((item) => item.category === filterCategory);
+  }
+  
+  // Filter by status
+  if (filterStatus) {
+    if (filterStatus === "available")
+      filtered = filtered.filter((item) => !item.soldout);
+    else if (filterStatus === "soldout")
         filtered = filtered.filter((item) => item.soldout);
     }
-
+    
     // Sort
     if (sortConfig !== null) {
       filtered = [...filtered].sort((a, b) => {
         let aVal = a[sortConfig.key];
         let bVal = b[sortConfig.key];
-
+        
         // For dates convert to timestamp
         if (sortConfig.key === "uploadedAt") {
           aVal = new Date(aVal).getTime();
           bVal = new Date(bVal).getTime();
         }
-
+        
         // For name and category, convert to lowercase for alphabetical
         if (typeof aVal === "string") aVal = aVal.toLowerCase();
         if (typeof bVal === "string") bVal = bVal.toLowerCase();
-
+        
         if (aVal < bVal) return sortConfig.direction === "asc" ? -1 : 1;
         if (aVal > bVal) return sortConfig.direction === "asc" ? 1 : -1;
         return 0;
       });
     }
-
+    
     return filtered;
   }, [items, searchTerm, filterCategory, filterStatus, sortConfig]);
-
+  
   // For showing arrow up/down on sorted column
   const getSortArrow = (key) => {
     if (sortConfig.key === key) {
@@ -193,6 +191,10 @@ export default function ItemPage() {
     return "";
   };
 
+  
+  if (loading) return <p>Loading...</p>;
+  if (!user) return <p>Access Denied</p>;
+  
   return (
     <div>
       <Navbar />
