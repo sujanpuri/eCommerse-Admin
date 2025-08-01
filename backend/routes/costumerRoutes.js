@@ -1,5 +1,5 @@
 import express from 'express';
-import { createOrFindCostumer, getAllCostumers, getCostumerById, updateCostumer, deleteCostumer } from '../controller/costumerController';
+import { createOrFindCostumer, getAllCostumers, getCostumerById, updateCostumer, deleteCostumer } from '../controller/costumerController.js';
 
 const router = express.Router();
 
