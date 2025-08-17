@@ -109,6 +109,8 @@ export default function ItemPage() {
         quantity: "",
       });
       setImageFile(null);
+      setImagePreview(null);
+      setShowForm(false);
       fetchItems();
     } catch (err) {
       console.error(err);
