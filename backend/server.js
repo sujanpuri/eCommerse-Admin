@@ -5,6 +5,7 @@ import userRoutes from './routes/userRoutes.js';
 import itemRoutes from './routes/itemRoutes.js';
 import costumerRoutes from './routes/costumerRoutes.js'
 import connectDB from './config/connect.js';
+import orderRoutes from './routes/orderRoutes.js';
 
 dotenv.config();
 const app = express();
@@ -25,6 +26,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/items', itemRoutes);
 
 app.use('/api/costumers', costumerRoutes);
+app.use('/api/orders', orderRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
